@@ -11,15 +11,81 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       News.belongsTo(models.User, { foreignKey: "authorId" });
       News.hasMany(models.Image, { foreignKey: "newsId" });
-      News.hasMany(models.Category, { foreignKey: "newsId" });
+      News.belongsTo(models.Category, { foreignKey: "categoryId" });
     }
   }
   News.init(
     {
-      title: DataTypes.STRING,
-      mainImg: DataTypes.STRING,
-      description: DataTypes.STRING,
-      authorId: DataTypes.INTEGER,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Title is required",
+          },
+          notNull: {
+            args: true,
+            msg: "Title cannot be null",
+          },
+        },
+      },
+      mainImg: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Image is required",
+          },
+          notNull: {
+            args: true,
+            msg: "Image cannot be null",
+          },
+        },
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Description is required",
+          },
+          notNull: {
+            args: true,
+            msg: "Description cannot be null",
+          },
+        },
+      },
+      authorId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Author is required",
+          },
+          notNull: {
+            args: true,
+            msg: "Author cannot be null",
+          },
+        },
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Category is required",
+          },
+          notNull: {
+            args: true,
+            msg: "Category cannot be null",
+          },
+        },
+      },
     },
     {
       sequelize,

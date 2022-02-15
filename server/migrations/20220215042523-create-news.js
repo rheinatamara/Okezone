@@ -16,6 +16,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      },
       description: {
         allowNull: false,
         type: Sequelize.STRING,
