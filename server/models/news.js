@@ -10,46 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       News.belongsTo(models.User, { foreignKey: "authorId" });
-      News.belongsTo(models.Category, { foreignKey: "categoryId" });
-      News.hasMany(models.Image, { foreignKey: "" });
+      News.hasMany(models.Image, { foreignKey: "newsId" });
+      News.hasMany(models.Category, { foreignKey: "newsId" });
     }
   }
   News.init(
     {
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Title is required",
-          },
-          notNull: true,
-        },
-      },
-      content: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Content is required",
-          },
-          notNull: true,
-        },
-      },
-      mainImg: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Image is required",
-          },
-          notNull: true,
-        },
-      },
-      categoryId: DataTypes.INTEGER,
+      title: DataTypes.STRING,
+      mainImg: DataTypes.STRING,
+      description: DataTypes.STRING,
       authorId: DataTypes.INTEGER,
     },
     {

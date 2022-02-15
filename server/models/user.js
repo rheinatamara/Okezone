@@ -1,7 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
-const { encode } = require("../helpers/bcrypt");
-
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,65 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.News, { foreignKey: "authorId" });
     }
   }
-  User.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Name is required",
-          },
-          notNull: true,
-        },
-      },
-      username: {
-        type: DataTypes.STRING,
-        unique: {
-          args: true,
-          msg: "Username is already exists",
-        },
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "username is required",
-          },
-          notNull: true,
-        },
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Password is required",
-          },
-          notNull: true,
-          isValidPass: function (password) {
-            if (password === null || password.length < 5) {
-              throw new Error(
-                "password cannot be empty and it needs to be longer than 5"
-              );
-            }
-          },
-        },
-      },
-      role: DataTypes.STRING,
-    },
-    {
-      hooks: {
-        beforeCreate: (user, option) => {
-          user.password = encode(user.password);
-        },
-      },
-      sequelize,
-      modelName: "User",
-    }
-  );
+  User.init({
+    name: DataTypes.STRING,
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
+    role: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
   return User;
 };
